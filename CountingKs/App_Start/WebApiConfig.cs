@@ -11,8 +11,6 @@ namespace CountingKs
   {
     public static void Register(HttpConfiguration config)
     {
-
-        //  ./api/nutrition/Foods/123
         config.Routes.MapHttpRoute(
             name: "Food",
             routeTemplate: "api/nutrition/{foodid}",
@@ -30,10 +28,7 @@ namespace CountingKs
       // To avoid processing unexpected or malicious queries, use the validation settings on QueryableAttribute to validate incoming queries.
       // For more information, visit http://go.microsoft.com/fwlink/?LinkId=279712.
       //config.EnableQuerySupport();
-
-        
-        //Seriazlier
-        //change to return camel case
+      
         var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().FirstOrDefault();
         jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 

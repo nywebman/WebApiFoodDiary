@@ -25,55 +25,6 @@ namespace CountingKs.Controllers
         {
             var repo = new CountingKsRepository(new CountingKsContext());
 
-            /* public IEnumerable<Food> Get()
-             * 
-             * iteration 1
-            var results = repo.GetAllFoods()
-                .OrderBy(f => f.Description)
-                .Take(25)
-                .ToList();
-            */
-
-            /*
-             * * iteration 2
-            var results = repo.GetAllFoodsWithMeasures()
-                .OrderBy(f => f.Description)
-                .Take(25)
-                .ToList()
-                //lamda in select brings food into linq below
-                //creating anonymous type below to send back with select
-                //the 2 anonymous types below are so that no issue with circular references
-                .Select(f => new
-                {
-                    Description = f.Description,
-                    Measures = f.Measures.Select(m => new 
-                    {
-                        Description = m.Description,
-                        Calories=m.Calories
-                    }
-                    )
-                });
-            */
-
-            /*
-            //not anonymous types in iteration 3
-            var results = repo.GetAllFoodsWithMeasures()
-                .OrderBy(f => f.Description)
-                .Take(25)
-                .ToList()
-                .Select(f => new FoodModel()
-                {
-                    Description = f.Description,
-                    Measures = f.Measures.Select(m => new MeasureModel()
-                    {
-                        Description = m.Description,
-                        Calories = m.Calories
-                    }
-                    )
-                });
-            */
-
-
             IQueryable<Food> query;
             if(includeMeasures)
             {
@@ -96,7 +47,6 @@ namespace CountingKs.Controllers
 
         public FoodModel Get(int foodid)
         {
-            //wrap call with factory instead of calling just _repo, will also include things done in factory like rounding formatting
             return _modelFactory.Create(_repo.GetFood(foodid));
         }
     }

@@ -70,10 +70,8 @@ namespace CountingKs.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            //telling container when asking for x, give them y
-            kernel.Bind<ICountingKsRepository>().To<CountingKsRepository>();    //interface to class
-            kernel.Bind<CountingKsContext>().To<CountingKsContext>();           //no interface here
-
+            kernel.Bind<ICountingKsRepository>().To<CountingKsRepository>();
+            kernel.Bind<CountingKsContext>().To<CountingKsContext>();
         }        
     }
 }

@@ -8,9 +8,6 @@ namespace CountingKs.Models
 {
     public class ModelFactory
     {
-
-        //Factory creates a place for all of this to be created
-
         public FoodModel Create(Food food)
         {
             return new FoodModel()
