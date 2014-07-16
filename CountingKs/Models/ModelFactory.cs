@@ -39,5 +39,14 @@ namespace CountingKs.Models
         }
 
 
+
+        public DiaryModel Create(Diary d)
+        {
+            return new DiaryModel()
+            {
+                Url = _urlHelper.Link("Diaries", new { diaryid= d.CurrentDate.ToString("yyyy-MM-dd") }),
+                CurrentDate=d.CurrentDate
+            };
+        }
     }
 }

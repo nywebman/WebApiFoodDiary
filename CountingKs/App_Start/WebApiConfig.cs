@@ -25,6 +25,12 @@ namespace CountingKs
             constraints: new { id = "/d+" } //regular expression for the parameter so its only an integer that accepted
         );
 
+        config.Routes.MapHttpRoute(
+            name: "Diaries",
+            routeTemplate: "api/user/diaries/{diaryid}",
+            defaults: new { Controller = "diaries", diaryid = RouteParameter.Optional }
+        );
+
       config.Routes.MapHttpRoute(
           name: "DefaultApi",
           routeTemplate: "api/{controller}/{id}",
