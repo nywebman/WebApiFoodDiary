@@ -10,32 +10,28 @@ using CountingKs.Models;
 
 namespace CountingKs.Controllers
 {
-    public class MeasuresController : ApiController
+    public class MeasuresController : BaseApiController
     {
-        public ModelFactory _modeFactory { get; set; }
-        public ICountingKsRepository _repo { get; set; }
-
-        public MeasuresController(ICountingKsRepository repo)
+        public MeasuresController(ICountingKsRepository repo) : base(repo)
         {
-            _repo = repo;
-            _modeFactory = new ModelFactory();
+
         }
 
         public IEnumerable<MeasureModel> Get(int foodid)
         {
-            var results = _repo.GetMeasuresForFood(foodid)
+            var results = TheRepository.GetMeasuresForFood(foodid)
                 .ToList()
-                .Select(m => _modeFactory.Create(m));
+                .Select(m => TheModelFactory.Create(m));
 
             return results;
         }
 
         public MeasureModel Get(int foodid, int id)
         {
-            var results = _repo.GetMeasure(id);
+            var results = TheRepository.GetMeasure(id);
             if (results.Food.Id == foodid)
             {
-                return _modeFactory.Create(results);
+                return TheModelFactory.Create(results);
             }
             else
             {
