@@ -5,16 +5,19 @@ using System.Linq;
 using System.Web;
 using System.Net.Http;
 using System.Web.Http.Routing;
+using CountingKs.Data;
 
 namespace CountingKs.Models
 {
     public class ModelFactory
     {
+        private ICountingKsRepository _repo;
         public UrlHelper _urlHelper { get; set; }
         
-        public ModelFactory(HttpRequestMessage request)
+        public ModelFactory(HttpRequestMessage request, ICountingKsRepository repo)
         {
             _urlHelper = new UrlHelper();
+            _repo = repo;
         }
 
 
@@ -46,6 +49,45 @@ namespace CountingKs.Models
             {
                 Url = _urlHelper.Link("Diaries", new { diaryid= d.CurrentDate.ToString("yyyy-MM-dd") }),
                 CurrentDate=d.CurrentDate
+            };
+        }
+
+        public DiaryEntry Parse(DiaryEntryModel model)
+        {
+            try
+            {
+                var entry = new DiaryEntry();
+                if (model.Quantity != default(double))
+                {
+                    entry.Quantity = model.Quantity;
+                }
+                var uri = new Uri(model.MeasureUrl);
+                var measureId = int.Parse(uri.Segments.Last());
+                var measure = _repo.GetMeasure(measureId);
+                entry.Measure = measure;
+                entry.FoodItem = measure.Food;
+
+                return entry;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+
+
+        public DiaryEntryModel Create(DiaryEntry entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public DiarySummaryModel CreateSummary(Diary diary)
+        {
+            return new DiarySummaryModel()
+            {
+                DiaryDate = diary.CurrentDate,
+                TotalCalories = Math.Round(diary.Entries.Sum(e => e.Measure.Calories * e.Quantity))
             };
         }
     }
