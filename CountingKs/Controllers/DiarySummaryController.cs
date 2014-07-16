@@ -23,7 +23,6 @@ namespace CountingKs.Controllers
 
         public object Get(DateTime diaryId)
         {
-            //DiarySummaryModel
             try
             {
                 var diary = TheRepository.GetDiary(_identityService.CurrentUser,diaryId);
