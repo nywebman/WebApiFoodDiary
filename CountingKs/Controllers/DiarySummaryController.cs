@@ -21,7 +21,7 @@ namespace CountingKs.Controllers
             _identityService = identityService;
         }
 
-        public HttpResponseMessage Get(DateTime diaryId)
+        public object Get(DateTime diaryId)
         {
             //DiarySummaryModel
             try
