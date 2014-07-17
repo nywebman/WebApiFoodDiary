@@ -5,11 +5,11 @@ using System.Web;
 
 namespace CountingKs.Models
 {
-    public class FoodModel
+    public class DiaryModel
     {
-        public string Description { get; set; }
-        public IEnumerable<MeasureModel> Measures { get; set; }
-
         public string Url { get; set; }
+        public DateTime CurrentDate { get; set; }
+        //public IEnumerable<DiaryEntryModel> Entries { get; set; }
+
     }
 }

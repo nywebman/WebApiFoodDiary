@@ -206,13 +206,21 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BaseApiController.cs" />
+    <Compile Include="Controllers\DiariesController.cs" />
+    <Compile Include="Controllers\DiaryEntriesController.cs" />
+    <Compile Include="Controllers\DiarySummaryController.cs" />
     <Compile Include="Controllers\FoodsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MeasuresController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\DiaryEntryModel.cs" />
+    <Compile Include="Models\DiaryModel.cs" />
+    <Compile Include="Models\DiarySummaryModel.cs" />
     <Compile Include="Models\FoodModel.cs" />
     <Compile Include="Models\MeasureModel.cs" />
     <Compile Include="Models\ModelFactory.cs" />
@@ -222,6 +230,8 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Services\CountingKsIdentityService.cs" />
+    <Compile Include="Services\ICountingKsIdentityService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\themes\base\images\animated-overlay.gif" />
@@ -385,9 +395,6 @@
           <CustomServerUrl>
           </CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
-          <servers defaultServer="SelfHostServer">
-            <server name="SelfHostServer" exePath="" cmdArgs="" url="http://localhost:8901/" workingDir="" />
-          </servers>
         </WebProjectProperties>
       </FlavorProperties>
     </VisualStudio>
