@@ -7,10 +7,11 @@ using System.Web.Http;
 using CountingKs.Data;
 using CountingKs.Models;
 using CountingKs.Services;
+using CountingKs.Filters;
 
 namespace CountingKs.Controllers
 {
-    [Authorize]
+    [CountingKsAuthorize]
     public class DiariesController : BaseApiController
     {
         public CountingKsIdentityService _identityService { get; set; }
