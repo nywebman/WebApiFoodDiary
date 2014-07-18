@@ -90,5 +90,16 @@ namespace CountingKs.Models
                 TotalCalories = Math.Round(diary.Entries.Sum(e => e.Measure.Calories * e.Quantity))
             };
         }
+
+        public AuthTokenModel Create(AuthToken authToken)
+        {
+            //puttin this in model factory wrapper of authtoken model since dont want to expose apiuser when passing back in Request.CreateResponse
+            //of controller
+            return new AuthTokenModel()
+            {
+                Token = authToken.Token,
+                Expiration = authToken.Expiration
+            };
+        }
     }
 }
