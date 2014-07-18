@@ -1,9 +1,11 @@
-﻿using Newtonsoft.Json.Serialization;
+﻿using CountingKs.Filters;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Formatting;
 using System.Web.Http;
+using WebApiContrib.Formatting.Jsonp;
 
 namespace CountingKs
 {
@@ -51,7 +53,17 @@ namespace CountingKs
         var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().FirstOrDefault();
         jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
+        //Add support for jsonp
+        //without accepts header will go to json, need accepts with javascript
+        //also nees ?callback= in the url
+        var formatter = new JsonpMediaTypeFormatter(jsonFormatter,"cb");
+        config.Formatters.Insert(0, formatter);
 
+
+        #if !DEBUG
+                //Force HTTPS on entire API
+                config.Filters.Add(new RequireHttpsAttribute());
+        #endif
 
     }
   }
