@@ -47,8 +47,25 @@ namespace CountingKs.Models
         {
             return new DiaryModel()
             {
-                Url = _urlHelper.Link("Diaries", new { diaryid= d.CurrentDate.ToString("yyyy-MM-dd") }),
+                Links=new List<LinkModel>()
+                {
+                    CreateLink(_urlHelper.Link("Diaries", new { diaryid= d.CurrentDate.ToString("yyyy-MM-dd") }),
+                        "Self"),
+                    CreateLink(_urlHelper.Link("DiaryEntries", new { diaryid= d.CurrentDate.ToString("yyyy-MM-dd") }),
+                        "newDiaryEntry","POST")
+                },
                 CurrentDate=d.CurrentDate
+            };
+        }
+
+        public LinkModel CreateLink(string href, string rel,string method="GET",bool isTemplated=false)
+        {
+            return new LinkModel()
+            {
+                Href = href,
+                Rel = rel,
+                Method=method,
+                IsTemplated=isTemplated
             };
         }
 
@@ -100,7 +117,7 @@ namespace CountingKs.Models
             };
         }
 
-        internal MeasureV2Model Create2(Measure measure)
+        public MeasureV2Model Create2(Measure measure)
         {
             return new MeasureV2Model()
             {
@@ -112,6 +129,35 @@ namespace CountingKs.Models
                 Fiber = measure.Fiber
                 //... and so on for the rest in the model
             };
+        }
+
+
+        public Diary Parse(DiaryModel model)
+        {
+            try
+            {
+                var entity = new Diary();
+
+                var selfLink = model.Links.Where(l => l.Rel == "self").FirstOrDefault();
+                if (selfLink != null && !string.IsNullOrWhiteSpace(selfLink.Href))
+                {
+                    var uri = new Uri(selfLink.Href);
+                    entity.Id = int.Parse(uri.Segments.Last());
+                }
+
+                entity.CurrentDate = model.CurrentDate;
+
+                if (model.Entries != null)
+                {
+                    foreach (var entry in model.Entries) entity.Entries.Add(Parse(entry));
+                }
+
+                return entity;
+            }
+            catch
+            {
+                return null;
+            }
         }
     }
 }

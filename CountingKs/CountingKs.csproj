@@ -55,6 +55,15 @@
     <Reference Include="Antlr3.Runtime">
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="CacheCow.Common">
+      <HintPath>..\packages\CacheCow.Common.0.5.2\lib\net40\CacheCow.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="CacheCow.Server">
+      <HintPath>..\packages\CacheCow.Server.0.5.2\lib\net40\CacheCow.Server.dll</HintPath>
+    </Reference>
+    <Reference Include="CacheCow.Server.EntityTagStore.SqlServer">
+      <HintPath>..\packages\CacheCow.Server.EntityTagStore.SqlServer.0.5.1\lib\net40\CacheCow.Server.EntityTagStore.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="DotNetOpenAuth.AspNet">
       <HintPath>..\packages\DotNetOpenAuth.AspNet.4.3.4.13329\lib\net45-full\DotNetOpenAuth.AspNet.dll</HintPath>
     </Reference>
@@ -218,7 +227,9 @@
     <Compile Include="Controllers\MeasuresV2Controller.cs" />
     <Compile Include="Controllers\MeasuresController.cs" />
     <Compile Include="Controllers\TokenController.cs" />
+    <Compile Include="Converters\LinkModelConverter.cs" />
     <Compile Include="Models\AuthTokenModel.cs" />
+    <Compile Include="Models\LinkModel.cs" />
     <Compile Include="Models\MeasureV2Model.cs" />
     <Compile Include="Models\TokenRequestModel.cs" />
     <Compile Include="Filters\CountingKsAuthorizeAttribute.cs" />

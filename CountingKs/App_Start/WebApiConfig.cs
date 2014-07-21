@@ -1,8 +1,12 @@
-﻿using CountingKs.Filters;
+﻿using CacheCow.Server;
+using CacheCow.Server.EntityTagStore.SqlServer;
+using CountingKs.Converters;
+using CountingKs.Filters;
 using CountingKs.Services;
 using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
@@ -68,7 +72,7 @@ namespace CountingKs
       
         var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().FirstOrDefault();
         jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-
+        jsonFormatter.SerializerSettings.Converters.Add(new LinkModelConverter()); //converters know how to convert into and out of json
         CreateMediaTypes(jsonFormatter);
 
         //Add support for jsonp
@@ -79,6 +83,16 @@ namespace CountingKs
 
         //Replace the controller configuration with our controller selector
         config.Services.Replace(typeof(IHttpControllerSelector),new CountingKsControllerSelector(config));
+
+
+        //Configure caching/etag support
+        //this outputs etag after request in response header
+        var connString=ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+        var etagStore = new SqlServerEntityTagStore(connString);
+        var cacheHandler = new CachingHandler(config);  //not sure if config is correct, example didnt pass any params
+        cacheHandler.AddLastModifiedHeader = false;  // not needed, true by default
+        config.MessageHandlers.Add(cacheHandler);
+
 
 
         #if !DEBUG
