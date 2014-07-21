@@ -28,7 +28,7 @@ namespace CountingKs.Services
             HttpControllerDescriptor descriptor;
             if(controllers.TryGetValue(controllerName,out descriptor)) //need this way because can throw error if not found in collection
             {
-                var version = GetVersionFromHeader(request);
+                var version = GetVersionFromAcceptHeaderVersion(request);
                 var newName = string.Concat(controllerName, "V", version);
                 HttpControllerDescriptor versionedDescriptor;
                 if (controllers.TryGetValue(controllerName, out versionedDescriptor)) //need this way because can throw error if not found in collection
@@ -38,6 +38,22 @@ namespace CountingKs.Services
                 return descriptor;
             }
             return null; //so system will hanlde the way it would and return 404, or whatever
+        }
+
+        private string GetVersionFromAcceptHeaderVersion(HttpRequestMessage request)
+        {
+            var accept = request.Headers.Accept;
+            foreach (var mime in accept)
+            {
+                if(mime.MediaType=="application/json")
+                {
+                    var value = mime.Parameters
+                        .Where(v => v.Name.Equals("version", StringComparison.OrdinalIgnoreCase))
+                        .FirstOrDefault();
+                    return value.Value;
+                }
+            }
+            return "1";
         }
 
         private string GetVersionFromHeader(HttpRequestMessage request)
