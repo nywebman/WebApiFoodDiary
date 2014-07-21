@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Formatting;
+using System.Net.Http.Headers;
 using System.Web.Http;
 using System.Web.Http.Dispatcher;
 using WebApiContrib.Formatting.Jsonp;
@@ -68,6 +69,8 @@ namespace CountingKs
         var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().FirstOrDefault();
         jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
+        CreateMediaTypes(jsonFormatter);
+
         //Add support for jsonp
         //without accepts header will go to json, need accepts with javascript
         //also nees ?callback= in the url
@@ -83,6 +86,23 @@ namespace CountingKs
                 config.Filters.Add(new RequireHttpsAttribute());
         #endif
 
+    }
+
+    private static void CreateMediaTypes(JsonMediaTypeFormatter jsonFormatter)
+    {
+        //if someone comes in with these types, assume we are talking about json formatter
+        var mediaTypes = new string[]
+        {
+            "application/vnd.countingks.food.v1+json",
+            "application/vnd.countingks.measure.v1+json",
+            "application/vnd.countingks.measure.v2+json",
+            "application/vnd.countingks.diary.v1+json",
+            "application/vnd.countingks.diaryEntry.v1+json"
+        };
+        foreach (var mediaType in mediaTypes)
+        {
+            jsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue(mediaType));
+        }
     }
   }
 }
