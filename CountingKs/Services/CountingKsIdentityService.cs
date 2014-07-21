@@ -12,8 +12,12 @@ namespace CountingKs.Services
         {
             get
             {
-                return Thread.CurrentPrincipal.Identity.Name; //Getting username and sending it along with diaries, since in db diff
-                                                                //users will have diff diaries
+#if DEBUG
+                return "brosen";
+#else
+                return Thread.CurrentPrincipal.Identity.Name; 
+#endif
+
             }
         }
     }
