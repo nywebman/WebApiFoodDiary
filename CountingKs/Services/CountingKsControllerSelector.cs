@@ -28,7 +28,7 @@ namespace CountingKs.Services
             HttpControllerDescriptor descriptor;
             if(controllers.TryGetValue(controllerName,out descriptor)) //need this way because can throw error if not found in collection
             {
-                var version = GetVersionFromQueryString(request);
+                var version = GetVersionFromHeader(request);
                 var newName = string.Concat(controllerName, "V", version);
                 HttpControllerDescriptor versionedDescriptor;
                 if (controllers.TryGetValue(controllerName, out versionedDescriptor)) //need this way because can throw error if not found in collection
@@ -38,6 +38,21 @@ namespace CountingKs.Services
                 return descriptor;
             }
             return null; //so system will hanlde the way it would and return 404, or whatever
+        }
+
+        private string GetVersionFromHeader(HttpRequestMessage request)
+        {
+            //x prefix is usally ignored by other things, good for custom headers
+            const string HEADER_NAME = "X-CountingKs-Version";
+            if(request.Headers.Contains(HEADER_NAME))
+            {
+                var header = request.Headers.GetValues(HEADER_NAME).FirstOrDefault();
+                if(header!=null)
+                {
+                    return header;
+                }
+            }
+            return "1";
         }
 
         private string GetVersionFromQueryString(HttpRequestMessage request)

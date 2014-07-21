@@ -93,8 +93,6 @@ namespace CountingKs.Models
 
         public AuthTokenModel Create(AuthToken authToken)
         {
-            //puttin this in model factory wrapper of authtoken model since dont want to expose apiuser when passing back in Request.CreateResponse
-            //of controller
             return new AuthTokenModel()
             {
                 Token = authToken.Token,
@@ -106,8 +104,7 @@ namespace CountingKs.Models
         {
             return new MeasureV2Model()
             {
-                Url = _urlHelper.Link("Measures", new { foodid = measure.Food.Id, id = measure.Id,v=2 }), //change the route for the link
-                        //v=2 will get right api version for self link
+                Url = _urlHelper.Link("Measures", new { foodid = measure.Food.Id, id = measure.Id }),
                 Description = measure.Description,
                 Calories = Math.Round(measure.Calories),
                 Carbohydrates=measure.Carbohydrates,
