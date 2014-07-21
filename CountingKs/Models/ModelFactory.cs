@@ -101,5 +101,19 @@ namespace CountingKs.Models
                 Expiration = authToken.Expiration
             };
         }
+
+        internal MeasureV2Model Create2(Measure measure)
+        {
+            return new MeasureV2Model()
+            {
+                Url = _urlHelper.Link("Measures2", new { foodid = measure.Food.Id, id = measure.Id }), //change the route for the link
+                Description = measure.Description,
+                Calories = Math.Round(measure.Calories),
+                Carbohydrates=measure.Carbohydrates,
+                Cholestrol=measure.Cholestrol,
+                Fiber = measure.Fiber
+                //... and so on for the rest in the model
+            };
+        }
     }
 }

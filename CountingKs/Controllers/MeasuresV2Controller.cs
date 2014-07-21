@@ -17,21 +17,21 @@ namespace CountingKs.Controllers
 
         }
 
-        public IEnumerable<MeasureModel> Get(int foodid)
+        public IEnumerable<MeasureV2Model> Get(int foodid)
         {
             var results = TheRepository.GetMeasuresForFood(foodid)
                 .ToList()
-                .Select(m => TheModelFactory.Create(m));
+                .Select(m => TheModelFactory.Create2(m));
 
             return results;
         }
 
-        public MeasureModel Get(int foodid, int id)
+        public MeasureV2Model Get(int foodid, int id)
         {
             var results = TheRepository.GetMeasure(id);
             if (results.Food.Id == foodid)
             {
-                return TheModelFactory.Create(results);
+                return TheModelFactory.Create2(results);
             }
             else
             {
