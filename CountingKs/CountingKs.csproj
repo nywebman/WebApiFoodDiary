@@ -240,6 +240,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Services\CountingKsControllerSelector.cs" />
     <Compile Include="Services\CountingKsIdentityService.cs" />
     <Compile Include="Services\ICountingKsIdentityService.cs" />
     <Compile Include="Services\NinjectWebApiFilterProvider.cs" />

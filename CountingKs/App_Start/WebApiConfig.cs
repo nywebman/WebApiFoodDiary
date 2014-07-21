@@ -1,10 +1,12 @@
 ﻿using CountingKs.Filters;
+using CountingKs.Services;
 using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Formatting;
 using System.Web.Http;
+using System.Web.Http.Dispatcher;
 using WebApiContrib.Formatting.Jsonp;
 
 namespace CountingKs
@@ -15,25 +17,25 @@ namespace CountingKs
     {
         config.Routes.MapHttpRoute(
             name: "Food",
-            routeTemplate: "api/v1/nutrition/{foodid}",
+            routeTemplate: "api/nutrition/{foodid}",
             defaults: new { Controller = "Foods", foodid = RouteParameter.Optional },
             constraints: new { id="/d+"} //regular expression for the parameter so its only an integer that accepted
         );
 
         config.Routes.MapHttpRoute(
             name: "Measures",
-            routeTemplate: "api/v1/nutrition/{foodid}/measures/{id}",
+            routeTemplate: "api/nutrition/{foodid}/measures/{id}",
             defaults: new { Controller = "measures", id = RouteParameter.Optional },
             constraints: new { id = "/d+" } //regular expression for the parameter so its only an integer that accepted
         );
-
+        /*
         config.Routes.MapHttpRoute(
             name: "Measures2",
-            routeTemplate: "api/v2/nutrition/{foodid}/measures/{id}",
+            routeTemplate: "api/nutrition/{foodid}/measures/{id}",
             defaults: new { Controller = "MeasuresV2", id = RouteParameter.Optional },
             constraints: new { id = "/d+" } //regular expression for the parameter so its only an integer that accepted
         );
-
+        */
         config.Routes.MapHttpRoute(
             name: "Diaries",
             routeTemplate: "api/user/diaries/{diaryid}",
@@ -71,6 +73,9 @@ namespace CountingKs
         //also nees ?callback= in the url
         var formatter = new JsonpMediaTypeFormatter(jsonFormatter,"cb");
         config.Formatters.Insert(0, formatter);
+
+        //Replace the controller configuration with our controller selector
+        config.Services.Replace(typeof(IHttpControllerSelector),new CountingKsControllerSelector(config));
 
 
         #if !DEBUG

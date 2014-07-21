@@ -10,9 +10,9 @@ using CountingKs.Models;
 
 namespace CountingKs.Controllers
 {
-    public class MeasuresV2Controller : BaseApiController
+    public class MeasuresController : BaseApiController
     {
-        public MeasuresV2Controller(ICountingKsRepository repo) : base(repo)
+        public MeasuresController(ICountingKsRepository repo) : base(repo)
         {
 
         }
