@@ -23,34 +23,35 @@ namespace CountingKs.Controllers
             
         }
         [Route("")]
-        public HttpResponseMessage Get()
+        public IHttpActionResult Get()
         {
             var results = new
             {
                 NumFoods = TheRepository.GetAllFoods().Count(),
                 NumUsers = TheRepository.GetApiUsers().Count()
             };
-            return Request.CreateResponse(results);
+            return Ok(results);
         }
 
         [Route("{id}")]
-        public HttpResponseMessage Get(int id)
+        public IHttpActionResult Get(int id)
         {
             if (id == 1)
             {
-
+                return Ok();
             }
             if (id == 2)
             {
+                return Ok();
             }
 
-            throw new NotImplementedException();
+            return NotFound();
         }
 
         [Route("~/api/stat/{name:alpha}")]
-        public HttpResponseMessage Get(string name)
+        public IHttpActionResult Get(string name)
         {
-            throw new NotImplementedException();
+            return BadRequest();
         }
     }
 }

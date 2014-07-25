@@ -70,9 +70,10 @@ namespace CountingKs.Controllers
             };
         }
         [Route("{foodid}", Name = "Food")] //naming the route will allow things like the helper.Link(~~~) work even in the model factory create() method
-        public FoodModel Get(int foodid)
+        public IHttpActionResult Get(int foodid)
         {
-            return TheModelFactory.Create(TheRepository.GetFood(foodid));
+           // return Versioned(TheModelFactory.Create(TheRepository.GetFood(foodid)));
+            return Versioned(TheModelFactory.Create(TheRepository.GetFood(foodid)),"v2");
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using CountingKs.Data;
 using CountingKs.Models;
+using CountingKs.ActionResult;
 
 namespace CountingKs.Controllers
 {
@@ -39,5 +40,9 @@ namespace CountingKs.Controllers
             }
         }
 
+        protected IHttpActionResult Versioned<T>(T body,string version="v1") where T :class
+        {
+            return new VersionedActionResult<T>(request, version, body);
+        }
     }
 }
