@@ -8,6 +8,8 @@ using System.Web.Http;
 
 namespace CountingKs.Controllers
 {
+    //this is used as prefix for all below
+    [RoutePrefix("api/stats")]
     public class StatsController : BaseApiController
     {
         public StatsController(ICountingKsRepository repo)
@@ -15,9 +17,7 @@ namespace CountingKs.Controllers
         {
             
         }
-
-        //using atributes to define routs instead of through config
-        [Route("api/stats")]
+        [Route("")]
         public HttpResponseMessage Get()
         {
             var results = new
@@ -28,11 +28,9 @@ namespace CountingKs.Controllers
             return Request.CreateResponse(results);
         }
 
-        [Route("api/stats/{id}")]
+        [Route("{id}")]
         public HttpResponseMessage Get(int id)
         {
-            //the param {id} in the route attrib is the same as the int id in the method call 
-
             if (id == 1)
             {
 
@@ -43,5 +41,27 @@ namespace CountingKs.Controllers
 
             throw new NotImplementedException();
         }
+
+        //use tilda to overide prefix and start with root
+        //[Route("~/api/stat/{id}")]
+        [Route("~/api/stat/{id:int}")]
+        public HttpResponseMessage Get2(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        [Route("~/api/stat/{name:alpha}")] //use :something so that it knows which one to call since both get (assuming above is get not get2)
+        public HttpResponseMessage Get(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        [Route("~/api/stat/{id:int/{date}}")] //can have mult param
+        public HttpResponseMessage Get2(int id)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }
