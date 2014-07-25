@@ -11,6 +11,7 @@ using System.Linq;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Http.Dispatcher;
 using WebApiContrib.Formatting.Jsonp;
 
@@ -95,7 +96,9 @@ namespace CountingKs
         cacheHandler.AddLastModifiedHeader = false;  // not needed, true by default
         config.MessageHandlers.Add(cacheHandler);
 
-
+        //Add support for cross origin resource supprt (CORS) 
+        var attr = new EnableCorsAttribute("*", "*", "GET");
+        config.EnableCors(attr); //allowed to enable, not enabled yet
 
         #if !DEBUG
                 //Force HTTPS on entire API
