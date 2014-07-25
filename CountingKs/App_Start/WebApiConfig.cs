@@ -20,6 +20,8 @@ namespace CountingKs
   {
     public static void Register(HttpConfiguration config)
     {
+        config.MapHttpAttributeRoutes();
+
         config.Routes.MapHttpRoute(
             name: "Food",
             routeTemplate: "api/nutrition/{foodid}",
@@ -82,7 +84,7 @@ namespace CountingKs
         config.Formatters.Insert(0, formatter);
 
         //Replace the controller configuration with our controller selector
-        config.Services.Replace(typeof(IHttpControllerSelector),new CountingKsControllerSelector(config));
+        //config.Services.Replace(typeof(IHttpControllerSelector),new CountingKsControllerSelector(config));
 
 
         //Configure caching/etag support

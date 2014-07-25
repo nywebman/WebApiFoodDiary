@@ -18,7 +18,7 @@ namespace CountingKs
     {
       AreaRegistration.RegisterAllAreas();
 
-      WebApiConfig.Register(GlobalConfiguration.Configuration);
+      GlobalConfiguration.Configure(WebApiConfig.Register); //reverse the way routs are called in webapiconfig
       FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
       RouteConfig.RegisterRoutes(RouteTable.Routes);
       BundleConfig.RegisterBundles(BundleTable.Bundles);
