@@ -13,6 +13,7 @@ using CountingKs.Filters;
 namespace CountingKs.Controllers
 {
     [CountingKsAuthorize(false)]
+    [RoutePrefix("api/nutrition/foods")]
     public class FoodsController : BaseApiController
     {
         public FoodsController(ICountingKsRepository repo) : base(repo)
@@ -22,6 +23,7 @@ namespace CountingKs.Controllers
 
         const int PAGE_SIZE = 50;
 
+        [Route("",Name="Food")]
         public object Get(bool includeMeasures=true,int page= 0)
         {
             var repo = new CountingKsRepository(new CountingKsContext());
@@ -67,7 +69,7 @@ namespace CountingKs.Controllers
                 Results = results
             };
         }
-
+        [Route("{foodid}", Name = "Food")] //naming the route will allow things like the helper.Link(~~~) work even in the model factory create() method
         public FoodModel Get(int foodid)
         {
             return TheModelFactory.Create(TheRepository.GetFood(foodid));

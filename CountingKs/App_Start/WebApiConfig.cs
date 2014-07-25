@@ -21,14 +21,14 @@ namespace CountingKs
     public static void Register(HttpConfiguration config)
     {
         config.MapHttpAttributeRoutes();
-
+        /*
         config.Routes.MapHttpRoute(
             name: "Food",
             routeTemplate: "api/nutrition/{foodid}",
             defaults: new { Controller = "Foods", foodid = RouteParameter.Optional },
             constraints: new { id="/d+"} //regular expression for the parameter so its only an integer that accepted
         );
-
+        */
         config.Routes.MapHttpRoute(
             name: "Measures",
             routeTemplate: "api/nutrition/{foodid}/measures/{id}",

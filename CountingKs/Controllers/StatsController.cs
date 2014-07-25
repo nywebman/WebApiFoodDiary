@@ -42,26 +42,10 @@ namespace CountingKs.Controllers
             throw new NotImplementedException();
         }
 
-        //use tilda to overide prefix and start with root
-        //[Route("~/api/stat/{id}")]
-        [Route("~/api/stat/{id:int}")]
-        public HttpResponseMessage Get2(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        [Route("~/api/stat/{name:alpha}")] //use :something so that it knows which one to call since both get (assuming above is get not get2)
+        [Route("~/api/stat/{name:alpha}")]
         public HttpResponseMessage Get(string name)
         {
             throw new NotImplementedException();
         }
-
-
-        [Route("~/api/stat/{id:int/{date}}")] //can have mult param
-        public HttpResponseMessage Get2(int id)
-        {
-            throw new NotImplementedException();
-        }
-
     }
 }
